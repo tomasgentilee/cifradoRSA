@@ -55,7 +55,6 @@ def generar_claves_rsa():
 
     print(f"El mensaje descifrado es {descifrado}")
     print(" ")
-    gc.collect()
 
 
 def cifrar_mensaje(clave_publica):
@@ -63,19 +62,22 @@ def cifrar_mensaje(clave_publica):
     print("Para el cifrado del mensaje m se utiliza la clave publica (e, N)")
 
     """
-    Si se quiere cifrar en mensaje con texto realizamos
-    Donde convertimos el mensaje a números usando el código ASCII
+    Convertimos el mensaje a números usando el código ASCII
     Utilizando el código ASCII se expresa el mensaje m en un número M
-    numeros_mensaje = [ord(caracter) for caracter in mensaje]
     """
     
-    mensaje = int(input("Ingrese el mensaje a cifrar: "))
+    mensaje = input("Ingrese el mensaje a cifrar: ")
+
+    numeros_mensaje = [ord(caracter) for caracter in mensaje]
+
+    print(f"Convertimos el mensaje a su correspondiente valor ASCII: {numeros_mensaje}")
 
     e, N = clave_publica
 
     print(f"Tomamos los valores de la clave publica, los cuales son e = {e} y N = {N}")
 
-    cifrado = pow(mensaje, e, N)
+    cifrado = [pow(num, e, N) for num in numeros_mensaje]
+
     print(f"Ciframos cada numero del mensaje obteniendo el mensaje cifrado: {cifrado}. Se obtiene el mensaje cifrado C calculando C = M^e mod N.")
 
     return cifrado
@@ -88,18 +90,13 @@ def descifrar_mensaje(cifrado, clave_privada):
 
     print(f"Tomamos los valores de la clave privada, los cuales son d = {d} y N = {N}, como tambien el mensaje cifrado {cifrado}")
 
-    """
-    Descifrar cada número del mensaje cifrado
-    descifrado = [chr(pow(int(num), d, N)) for num in cifrado]
-    """
-
-    descifrado = pow(cifrado, d, N)
+    descifrado = [pow(num, d, N) for num in cifrado]
 
     print("Desciframos cada numero del mensaje cifrado. Se obtiene el mensaje descifrado M calculando M = C^d mod N. En caso de tener letras el M obtenido es la representación numérica en ASCII del mensaje original m.")
 
-    print(descifrado)
+    mensaje_descifrado = ''.join(chr(num) for num in descifrado)
 
-    return descifrado
+    return mensaje_descifrado
 
     
 
