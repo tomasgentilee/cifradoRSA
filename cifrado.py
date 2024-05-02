@@ -44,12 +44,13 @@ def generar_claves_rsa():
     clave_publica = (e, N)
     print(f"Clave privada (d, N): ({d}, {N})")
     clave_privada = (d, N)
-
+    print(" ")
+    print("------------------------------")
     print(" ")
     cifrado = cifrar_mensaje(clave_publica)
-
     print(f"El mensaje cifrado es {cifrado}")
-
+    print(" ")
+    print("------------------------------")
     print(" ")
     descifrado = descifrar_mensaje(cifrado, clave_privada)
 
@@ -65,8 +66,9 @@ def cifrar_mensaje(clave_publica):
     Convertimos el mensaje a números usando el código ASCII
     Utilizando el código ASCII se expresa el mensaje m en un número M
     """
-    
+    print(" ")
     mensaje = input("Ingrese el mensaje a cifrar: ")
+    print(" ")
 
     numeros_mensaje = [ord(caracter) for caracter in mensaje]
 
@@ -77,8 +79,9 @@ def cifrar_mensaje(clave_publica):
     print(f"Tomamos los valores de la clave publica, los cuales son e = {e} y N = {N}")
 
     cifrado = [pow(num, e, N) for num in numeros_mensaje]
+    print(" ")
 
-    print(f"Ciframos cada numero del mensaje obteniendo el mensaje cifrado: {cifrado}. Se obtiene el mensaje cifrado C calculando C = M^e mod N.")
+    print(f"Ciframos cada numero del mensaje obteniendo el mensaje cifrado. Se obtiene el mensaje cifrado C calculando C = M^e mod N.")
 
     return cifrado
 
@@ -90,9 +93,13 @@ def descifrar_mensaje(cifrado, clave_privada):
 
     print(f"Tomamos los valores de la clave privada, los cuales son d = {d} y N = {N}, como tambien el mensaje cifrado {cifrado}")
 
+    print(" ")
+
     descifrado = [pow(num, d, N) for num in cifrado]
 
     print("Desciframos cada numero del mensaje cifrado. Se obtiene el mensaje descifrado M calculando M = C^d mod N. En caso de tener letras el M obtenido es la representación numérica en ASCII del mensaje original m.")
+
+    print(" ")
 
     mensaje_descifrado = ''.join(chr(num) for num in descifrado)
 
